@@ -43,6 +43,7 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_heart_icon"
+        app:tint="@color/white"
         android:backgroundTint="#FF0000"
        />
 

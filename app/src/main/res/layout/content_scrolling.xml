@@ -25,9 +25,10 @@
 
             <ImageView
                 android:layout_width="@dimen/thumbnail_side"
-                android:layout_height="@dimen/thumbnail_side"
-                android:src="@drawable/ninja_patate"
+                android:layout_height="@dimen/thumbnail_height"
                 android:id="@+id/movie_poster_thumb"
+                android:adjustViewBounds="true"
+                android:scaleType="center"
                 />
 
             <LinearLayout
@@ -86,6 +87,7 @@
                 android:textSize="@dimen/h4_fz"
                 android:layout_marginTop="6dp"
                 android:id="@+id/movie_abstract_content"
+                android:maxLines="3"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -93,9 +95,9 @@
                 android:text="@string/read_more_title"
                 android:textColor="@color/teal_700"
                 android:textSize="@dimen/h4_fz"
-                android:layout_marginTop="6dp"
                 android:id="@+id/movie_abstract_see_more"
                 android:gravity="center"
+                android:padding="6dp"
                 />
         </LinearLayout>
 

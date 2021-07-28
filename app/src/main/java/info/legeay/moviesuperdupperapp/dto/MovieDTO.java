@@ -31,4 +31,18 @@ public class MovieDTO implements Serializable {
     public Movie toMovie() {
         return new Movie(Title, Released, Genre, Director, Plot, Actors, Awards, Poster);
     }
+
+    @Override
+    public String toString() {
+        return "MovieDTO{" +
+                "Title='" + Title + '\'' +
+                ", Released='" + Released + '\'' +
+                ", Genre='" + Genre + '\'' +
+                ", Director='" + Director + '\'' +
+                ", Plot='" + Plot + '\'' +
+                ", Actors='" + Actors + '\'' +
+                ", Awards='" + Awards + '\'' +
+                ", Poster='" + Poster + '\'' +
+                '}';
+    }
 }
