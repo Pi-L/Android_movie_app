@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movie super dupper app</string>
+    <string name="les_ninjas_patates_canibales">les_ninjas_patates_canibales</string>
+    <string name="recherche">Search</string>
+    <string name="blobby"><u>Blobby</u>&#032;</string>
+    <string name="bonjour">Hello\u0020</string>
+    <string name="exclamation">\u0020!!</string>
+    <string name="films_populaires"><u>Popular Movies</u></string>
+    <string name="input_firstname_label">Your first name :</string>
+    <string name="title_activity_movie">Movie</string>
+    <string name="movie_directors_title"><b>Director(s)</b></string>
+    <string name="movie_awards_title"><b>Award(s)</b></string>
+    <string name="movie_actors_title"><b>Actor(s)</b></string>
+    <string name="movie_abstract_title"><b>Abstract</b></string>
+    <string name="read_more_title"><b>Read more</b></string>
+</resources>

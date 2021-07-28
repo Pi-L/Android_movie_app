@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MovieActivity"
+    tools:showIn="@layout/activity_movie">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/thumbnail_side"
+                android:layout_height="@dimen/thumbnail_side"
+                android:src="@drawable/ninja_patate"
+                android:id="@+id/movie_poster_thumb"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_movie_1"
+                    android:textSize="@dimen/h3_fz"
+                    android:id="@+id/movie_title"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sortie : 21 Juillet 2021"
+                    android:textSize="@dimen/h4_fz"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/movie_release_date"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action, Adventure, Fantasy, Sci-Fi"
+                    android:textSize="@dimen/h4_fz"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/movie_types"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_abstract_title"
+                android:textSize="@dimen/h3_fz"
+                android:id="@+id/movie_abstract_title"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lorem blablabla"
+                android:textSize="@dimen/h4_fz"
+                android:layout_marginTop="6dp"
+                android:id="@+id/movie_abstract_content"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/read_more_title"
+                android:textColor="@color/teal_700"
+                android:textSize="@dimen/h4_fz"
+                android:layout_marginTop="6dp"
+                android:id="@+id/movie_abstract_see_more"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginTop="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="40dp"
+            android:gravity="start|center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_directors_title"
+                    android:textSize="@dimen/h4_fz"
+                    android:id="@+id/movie_directors_title"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                 />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="toto"
+                    android:textSize="@dimen/h4_fz"
+                    android:id="@+id/movie_directors_content"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="start|center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_actors_title"
+                    android:textSize="@dimen/h4_fz"
+                    android:id="@+id/movie_actors_title"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="toto, titi, tutu"
+                    android:textSize="@dimen/h4_fz"
+                    android:id="@+id/movie_actors_content"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="start|center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_awards_title"
+                    android:textSize="@dimen/h4_fz"
+                    android:id="@+id/movie_awards_title"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="best movie of the year"
+                    android:textSize="@dimen/h4_fz"
+                    android:id="@+id/movie_awards_content"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginTop="6dp"
+            />
+
+    </LinearLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>
