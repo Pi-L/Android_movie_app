@@ -1,4 +1,4 @@
-package info.legeay.moviesuperdupperapp;
+package info.legeay.moviesuperdupperapp.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -25,14 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-
+import info.legeay.moviesuperdupperapp.R;
 import info.legeay.moviesuperdupperapp.domain.Movie;
 import info.legeay.moviesuperdupperapp.dto.MovieDTO;
 import info.legeay.moviesuperdupperapp.util.Network;
@@ -43,6 +36,7 @@ public class MovieActivity extends AppCompatActivity {
 
     //private ActivityMovieBinding binding;
     private Movie movie;
+    private String imdbID;
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolBarLayout;
@@ -72,11 +66,10 @@ public class MovieActivity extends AppCompatActivity {
 
         Log.d("PIL", "MovieActivity: onCreate()");
 
-        // binding = ActivityMovieBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_movie);
 
         Bundle extras = getIntent().getExtras();
-
+        imdbID = extras.getString("imdbID");
         init();
 
         Glide.with(this).load(R.drawable.cat_loader)
@@ -99,7 +92,10 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     private void setMovie() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://www.omdbapi.com/?t=%27ready%20player%20one%27&apikey=bf4e1adb", null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                String.format("http://www.omdbapi.com/?i=%s&apikey=bf4e1adb", imdbID),
+                null,
                 response -> {
                     Log.d("PIL", String.format("response ok : %s", response));
                     ObjectMapper mapper = new ObjectMapper();

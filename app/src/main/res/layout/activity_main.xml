@@ -1,166 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
+    tools:context=".activity.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
 
-    android:fillViewport="true">
-
-    <RelativeLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:background="@color/mainBgColor"
-            android:padding="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:id="@+id/main_title"
-            android:paddingBottom="50dp"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bonjour"
-                android:textSize="@dimen/text_title_fz"
-                android:textColor="@color/gold"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_title_fz"
-                android:textColor="@color/gold"
-                android:id="@+id/text_view_firstname"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exclamation"
-                android:textSize="@dimen/text_title_fz"
-                android:textColor="@color/gold"
-                />
-        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/main_title"
-            android:id="@+id/main_movie_list"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/films_populaires"
-                android:textSize="@dimen/h2_fz"
-                android:layout_marginBottom="10dp"
-                />
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@color/mainBgColor"
+                android:padding="20dp"
+                android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:onClick="onClickMovie"
-                android:tag="1"
+                android:id="@+id/main_title"
+                android:paddingBottom="50dp"
+                android:gravity="center"
                 >
-
-                <ImageView
-                    android:layout_width="@dimen/thumbnail_side"
-                    android:layout_height="@dimen/thumbnail_side"
-                    android:src="@drawable/ninja_patate"
-                    >
-
-                </ImageView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_movie_1"
-                        android:textSize="@dimen/h3_fz"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sortie : 21 Juillet 2021"
-                        android:textSize="@dimen/h4_fz"
-                        android:layout_marginTop="6dp"
-                        />
-                </LinearLayout>
+                    android:text="@string/bonjour"
+                    android:textSize="@dimen/text_title_fz"
+                    android:textColor="@color/gold"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_title_fz"
+                    android:textColor="@color/gold"
+                    android:id="@+id/text_view_firstname"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exclamation"
+                    android:textSize="@dimen/text_title_fz"
+                    android:textColor="@color/gold"
+                    />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:onClick="onClickMovie"
-                android:tag="2"
+                android:orientation="vertical"
+                android:layout_below="@id/main_title"
+                android:id="@+id/main_movie_list"
                 >
 
-                <ImageView
-                    android:layout_width="@dimen/thumbnail_side"
-                    android:layout_height="@dimen/thumbnail_side"
-                    android:src="@drawable/ninja_patate"
-                    >
-
-                </ImageView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_movie_2"
-                        android:textSize="@dimen/h3_fz"
-                        android:id="@+id/movie_title"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sortie : 21 Juillet 2021"
-                        android:textSize="@dimen/h4_fz"
-                        android:layout_marginTop="6dp"
-                        />
-                </LinearLayout>
+                    android:text="@string/films_populaires"
+                    android:textSize="@dimen/h2_fz"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
 
             </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <Button
+        android:layout_width="135dp"
+        android:layout_height="60dp"
+        android:text="@string/recherche"
+        android:textColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/button_default"
+        android:id="@+id/button_main_view_search_movies"
+        android:layout_alignParentRight="true" />
 
-            <Button
-                android:layout_width="135dp"
-                android:layout_height="60dp"
-                android:text="@string/recherche"
-                android:textColor="@color/black"
-                android:layout_gravity="bottom|end"
-                android:backgroundTint="@color/button_default"
-                android:id="@+id/button_main_view_search_movies"/>
-
-        </FrameLayout>
-
-
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

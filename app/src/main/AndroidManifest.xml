@@ -15,10 +15,10 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MovieSuperDupperApp">
         <activity
-            android:name=".MovieActivity"
+            android:name=".activity.MovieActivity"
             android:label="@string/title_activity_movie"
             android:theme="@style/Theme.MovieSuperDupperApp.NoActionBar"></activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

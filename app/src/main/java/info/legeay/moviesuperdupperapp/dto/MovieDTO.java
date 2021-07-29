@@ -21,15 +21,17 @@ public class MovieDTO implements Serializable {
 
     private String Title;
     private String Released;
+    private String Year;
     private String Genre;
     private String Director;
     private String Plot;
     private String Actors;
     private String Awards;
     private String Poster;
+    private String imdbID;
 
     public Movie toMovie() {
-        return new Movie(Title, Released, Genre, Director, Plot, Actors, Awards, Poster);
+        return new Movie(Title, Released, Year, Genre, Director, Plot, Actors, Awards, Poster, imdbID);
     }
 
     @Override
