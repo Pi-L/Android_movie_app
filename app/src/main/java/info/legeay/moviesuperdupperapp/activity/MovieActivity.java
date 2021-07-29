@@ -1,5 +1,6 @@
 package info.legeay.moviesuperdupperapp.activity;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -15,10 +16,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,6 +44,7 @@ public class MovieActivity extends AppCompatActivity {
     private String imdbID;
 
     private Toolbar toolbar;
+    private TextView textViewToolbarTitle;
     private CollapsingToolbarLayout toolBarLayout;
     private FloatingActionButton fab;
     private ImageView imageViewLoader;
@@ -81,6 +87,7 @@ public class MovieActivity extends AppCompatActivity {
             imageViewLoader.setVisibility(View.VISIBLE);
             imageViewNoInternet.setVisibility(View.GONE);
             setMovie();
+
         } else {
             imageViewLoader.setVisibility(View.GONE);
             imageViewNoInternet.setVisibility(View.VISIBLE);
@@ -91,21 +98,24 @@ public class MovieActivity extends AppCompatActivity {
 
     }
 
+
     private void setMovie() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                String.format("http://www.omdbapi.com/?i=%s&apikey=bf4e1adb", imdbID),
+                String.format("https://www.omdbapi.com/?i=%s&plot=full&apikey=bf4e1adb", imdbID),
                 null,
                 response -> {
-                    Log.d("PIL", String.format("response ok : %s", response));
                     ObjectMapper mapper = new ObjectMapper();
+
                     try {
                         MovieDTO movieDTO = mapper.readValue(response.toString(), MovieDTO.class);
+
                         if(movieDTO != null) {
                             MovieActivity.this.movie = movieDTO.toMovie();
                             updateUi();
                         }
                         else Log.d("PIL", "movieDTO == null");
+
                     } catch (JsonProcessingException e) {
                         Log.d("PIL", e.getMessage());
                     } finally {
@@ -123,7 +133,7 @@ public class MovieActivity extends AppCompatActivity {
 
     private void updateUi() {
 
-        toolBarLayout.setTitle(this.movie.getTitle());
+        textViewToolbarTitle.setText(this.movie.getTitle());
 
         Picasso.get()
                 .load(this.movie.getImageUrl())
@@ -150,9 +160,8 @@ public class MovieActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        setSupportActionBar(toolbar);
-
         toolbar = findViewById(R.id.toolbar);
+        textViewToolbarTitle = findViewById(R.id.toolbar_title);
         fab = findViewById(R.id.fab);
         toolBarLayout = findViewById(R.id.toolbar_layout);
         imageViewLoader = findViewById(R.id.loader);
@@ -160,14 +169,14 @@ public class MovieActivity extends AppCompatActivity {
 
         linearLayoutMovieContainer = findViewById(R.id.movie_container);
         imageViewthumb = findViewById(R.id.movie_poster_thumb);
-        textViewTitle = (TextView) findViewById(R.id.movie_title);
-        textViewReleaseDate = (TextView) findViewById(R.id.movie_release_date);
-        textViewTypes = (TextView) findViewById(R.id.movie_types);
-        textViewAbstract = (TextView) findViewById(R.id.movie_abstract_content);
-        textViewDirectors = (TextView) findViewById(R.id.movie_directors_content);
-        textViewActors = (TextView) findViewById(R.id.movie_actors_content);
-        textViewAwards = (TextView) findViewById(R.id.movie_awards_content);
-        textViewViewMore = (TextView) findViewById(R.id.movie_abstract_see_more);
+        textViewTitle = findViewById(R.id.movie_title);
+        textViewReleaseDate = findViewById(R.id.movie_release_date);
+        textViewTypes = findViewById(R.id.movie_types);
+        textViewAbstract = findViewById(R.id.movie_abstract_content);
+        textViewDirectors = findViewById(R.id.movie_directors_content);
+        textViewActors = findViewById(R.id.movie_actors_content);
+        textViewAwards = findViewById(R.id.movie_awards_content);
+        textViewViewMore = findViewById(R.id.movie_abstract_see_more);
 
         fab.setOnClickListener(view -> Snackbar
                 .make(view, "Loved it", Snackbar.LENGTH_LONG)
@@ -183,6 +192,8 @@ public class MovieActivity extends AppCompatActivity {
             }
             isReadMoreClicked = !isReadMoreClicked;
         });
+
+        setSupportActionBar(toolbar);
     }
 
     @Override

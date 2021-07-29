@@ -63,13 +63,15 @@ public class MainActivity extends AppCompatActivity {
 
         setMovieList();
 
-
         this.textViewFirstname = (TextView) findViewById(R.id.text_view_firstname);
         this.textViewFirstname.setText("Kitty");
         this.textViewButtonSearchMovies  = (TextView) findViewById(R.id.button_main_view_search_movies);
 
 
-        this.textViewButtonSearchMovies.setOnClickListener(v -> Log.d("pil", "pliiiiffff"));
+        this.textViewButtonSearchMovies.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+        });
 
         Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
         showdialog();

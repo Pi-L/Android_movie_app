@@ -16,4 +16,5 @@
     <string name="read_more_title"><b>Read more</b></string>
     <string name="read_less_title"><b>Read less</b></string>
     <string name="no_internet">No Internet Connection</string>
+    <string name="search"><b>search</b></string>
 </resources>
