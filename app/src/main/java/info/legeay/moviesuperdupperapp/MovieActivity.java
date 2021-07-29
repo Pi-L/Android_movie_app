@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -21,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.apache.commons.io.IOUtils;
@@ -33,6 +35,7 @@ import java.nio.charset.StandardCharsets;
 
 import info.legeay.moviesuperdupperapp.domain.Movie;
 import info.legeay.moviesuperdupperapp.dto.MovieDTO;
+import info.legeay.moviesuperdupperapp.util.Network;
 
 // import info.legeay.moviesuperdupperapp.databinding.ActivityMovieBinding;
 
@@ -44,7 +47,10 @@ public class MovieActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolBarLayout;
     private FloatingActionButton fab;
+    private ImageView imageViewLoader;
+    private ImageView imageViewNoInternet;
 
+    private LinearLayout linearLayoutMovieContainer;
     private ImageView imageViewthumb;
     private TextView textViewTitle;
     private TextView textViewReleaseDate;
@@ -73,30 +79,29 @@ public class MovieActivity extends AppCompatActivity {
 
         init();
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        InputStream inputStream = null;
-//        MovieDTO movieDTO = null;
-//        try {
-//            inputStream = getAssets().open("movies.json");
-//            movieDTO = mapper.readValue(inputStream, MovieDTO.class);
-//        } catch (IOException e) {
-//            Log.d("PIL", e.getMessage());
-//        }
-//
-//        if(movieDTO != null) this.movie = movieDTO.toMovie();
-//        else Log.d("PIL", "movieDTO is null");
-//
-//        updateUi();
-//
-//        OmdbApiClient omdbApiClient = new OmdbApiClient();
-//        omdbApiClient.findMovieByName("test", this);
-        setMovie();
+        Glide.with(this).load(R.drawable.cat_loader)
+                .into(imageViewLoader);
+        Glide.with(this).load(R.drawable.internet_down)
+                .into(imageViewNoInternet);
+
+        if(Network.isInternetAvailable(this)) {
+            imageViewLoader.setVisibility(View.VISIBLE);
+            imageViewNoInternet.setVisibility(View.GONE);
+            setMovie();
+        } else {
+            imageViewLoader.setVisibility(View.GONE);
+            imageViewNoInternet.setVisibility(View.VISIBLE);
+
+            Snackbar.make(linearLayoutMovieContainer, R.string.no_internet, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
     }
 
     private void setMovie() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "https://www.omdbapi.com/?t=%27star%20wars%27&apikey=c1af0d09", null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://www.omdbapi.com/?t=%27ready%20player%20one%27&apikey=bf4e1adb", null,
                 response -> {
-                    Log.d("PIL", "response ok");
+                    Log.d("PIL", String.format("response ok : %s", response));
                     ObjectMapper mapper = new ObjectMapper();
                     try {
                         MovieDTO movieDTO = mapper.readValue(response.toString(), MovieDTO.class);
@@ -107,9 +112,14 @@ public class MovieActivity extends AppCompatActivity {
                         else Log.d("PIL", "movieDTO == null");
                     } catch (JsonProcessingException e) {
                         Log.d("PIL", e.getMessage());
+                    } finally {
+                       imageViewLoader.setVisibility(View.GONE);
                     }
                 }
-                , error -> Log.d("PIL", error.getMessage())
+                , error -> {
+                    imageViewLoader.setVisibility(View.GONE);
+                    Log.d("PIL", error.getMessage());
+                }
         );
 
         requestQueue.add(jsonObjectRequest);
@@ -148,8 +158,11 @@ public class MovieActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
-
         toolBarLayout = findViewById(R.id.toolbar_layout);
+        imageViewLoader = findViewById(R.id.loader);
+        imageViewNoInternet = findViewById(R.id.no_internet);
+
+        linearLayoutMovieContainer = findViewById(R.id.movie_container);
         imageViewthumb = findViewById(R.id.movie_poster_thumb);
         textViewTitle = (TextView) findViewById(R.id.movie_title);
         textViewReleaseDate = (TextView) findViewById(R.id.movie_release_date);

@@ -92,10 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickMovie(View view) {
         Toast.makeText(this, "Movie "+view.getTag()+"...", Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(this, MovieActivity.class);
+
         String movieKeyString = String.format("title_movie_%s", view.getTag().toString());
         int movieTitleIdRessource = getResources().getIdentifier(movieKeyString, "string", getPackageName());
         intent.putExtra("filmTitle", getResources().getString(movieTitleIdRessource));
+
         startActivity(intent);
     }
 

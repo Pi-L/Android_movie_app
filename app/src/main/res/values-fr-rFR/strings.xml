@@ -15,4 +15,5 @@
     <string name="movie_abstract_title"><b>A propos de ce film</b></string>
     <string name="read_more_title"><b>Lire la suite</b></string>
     <string name="read_less_title"><b>Lire moins</b></string>
+    <string name="no_internet">Connexion internet indisponible</string>
 </resources>
