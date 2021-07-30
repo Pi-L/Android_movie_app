@@ -31,6 +31,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="center"
                 android:src="@drawable/ninja_patate"
+                android:transitionName="poster"
                 />
 
             <LinearLayout
