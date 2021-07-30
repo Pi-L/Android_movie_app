@@ -32,7 +32,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:padding="5dp"
             android:orientation="horizontal"
@@ -43,6 +43,7 @@
                 android:layout_width="200dp"
                 android:layout_height="70dp"
                 android:singleLine="true"
+                android:id="@+id/search_input"
                 />
 
             <Button
@@ -58,6 +59,7 @@
             android:id="@+id/search_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="10dp"
             />
 
     </LinearLayout>

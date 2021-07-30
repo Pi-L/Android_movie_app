@@ -2,27 +2,32 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
     android:orientation="horizontal"
-    android:layout_marginTop="20dp"
+    android:padding="10dp"
     android:onClick="onClickMovie"
     >
 
-    <ImageView
-        android:layout_width="@dimen/thumbnail_side"
-        android:layout_height="@dimen/thumbnail_side"
-        android:src="@drawable/ninja_patate"
-        android:id="@+id/main_movie_card_poster"
-        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/movie_poster_container">
+        <ImageView
+            android:layout_width="@dimen/thumbnail_side"
+            android:layout_height="@dimen/thumbnail_height"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            android:src="@drawable/ninja_patate"
+            android:id="@+id/main_movie_card_poster"
+            />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp">
+        android:paddingTop="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

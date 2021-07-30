@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewFirstname;
     private TextView textViewButtonSearchMovies;
 
-    private List<Movie> popularMovieList = new ArrayList<>();
+    private final List<Movie> popularMovieList = new ArrayList<>();
 
     private RecyclerView recyclerView;
     private MainAdapter adapter;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         setMovieList();
 
         this.textViewFirstname = (TextView) findViewById(R.id.text_view_firstname);
-        this.textViewFirstname.setText("Kitty");
+        this.textViewFirstname.setText("Pil");
         this.textViewButtonSearchMovies  = (TextView) findViewById(R.id.button_main_view_search_movies);
 
 
@@ -91,13 +91,14 @@ public class MainActivity extends AppCompatActivity {
                         MovieDTO[] movieDTOArray = searchDTO.getSearch();
 
                         if(movieDTOArray != null && movieDTOArray.length > 0) {
-                            for (int i = 0; i < movieDTOArray.length; i++) {
-                                MainActivity.this.popularMovieList.add(movieDTOArray[i].toMovie());
+                            for (MovieDTO movieDTO : movieDTOArray) {
+                                MainActivity.this.popularMovieList.add(movieDTO.toMovie());
                             }
 
-                            MainActivity.this.adapter = new MainAdapter(MainActivity.this, MainActivity.this.popularMovieList);
+                            MainActivity.this.adapter = new MainAdapter(MainActivity.this, MainActivity.this.popularMovieList, LinearLayout.HORIZONTAL, 130);
 
                             MainActivity.this.recyclerView.setAdapter(MainActivity.this.adapter);
+                            // MainActivity.this.adapter.notifyDataSetChanged();
                         }
                         else Log.d("PIL", "movieDTOArray == null");
                     } catch (JsonProcessingException e) {
@@ -136,14 +137,14 @@ public class MainActivity extends AppCompatActivity {
         // Set up the input
         EditText input = new EditText(this);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setHint("Toto");
+        input.setHint("Your name");
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
         // Set up the buttons
         builder.setPositiveButton("OK", (dialog, which) -> {
                 // Here you get get input text from the Edittext
-            textViewFirstname.setText( input.getText() == null || input.getText().toString().isEmpty() ? "Kitty" : input.getText());
+            textViewFirstname.setText( input.getText() == null || input.getText().toString().isEmpty() ? "Pil" : input.getText());
         });
         // builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
         builder.show();
