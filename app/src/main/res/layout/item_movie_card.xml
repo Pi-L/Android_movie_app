@@ -6,7 +6,6 @@
     android:layout_height="200dp"
     android:orientation="horizontal"
     android:padding="10dp"
-    android:onClick="onClickMovie"
     >
 
     <LinearLayout

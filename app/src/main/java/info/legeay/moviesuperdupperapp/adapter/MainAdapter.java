@@ -1,6 +1,8 @@
 package info.legeay.moviesuperdupperapp.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -19,6 +22,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import info.legeay.moviesuperdupperapp.R;
+import info.legeay.moviesuperdupperapp.activity.MainActivity;
+import info.legeay.moviesuperdupperapp.activity.MovieActivity;
+import info.legeay.moviesuperdupperapp.activity.SearchActivity;
 import info.legeay.moviesuperdupperapp.domain.Movie;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
@@ -43,6 +49,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
             textViewMovieCardTitle = view.findViewById(R.id.main_movie_card_title);
             textViewMovieCardYear = view.findViewById(R.id.main_movie_card_year);
             linearLayoutPosterContainer = view.findViewById(R.id.movie_poster_container);
+
+            view.setOnClickListener(v -> {
+
+                Intent intent = new Intent(context, MovieActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity)context, imageViewMovieCardPoster, "poster");
+
+                intent.putExtra("imdbID", view.getTag().toString());
+
+                context.startActivity(intent, options.toBundle());
+            });
 
             ((LinearLayout) view).setOrientation(MainAdapter.this.orientation);
             ViewGroup.LayoutParams params = view.getLayoutParams();
@@ -91,6 +108,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
 
         holder.textViewMovieCardTitle.setText(movie.getTitle());
         holder.textViewMovieCardYear.setText(movie.getYearRelease());
+
+        if(position == getItemCount() - 1 && context instanceof SearchActivity) {
+            ((SearchActivity) context).getMoreMovie();
+        }
     }
 
     @Override

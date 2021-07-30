@@ -1,6 +1,7 @@
 package info.legeay.moviesuperdupperapp.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -29,6 +30,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Map;
 
 import info.legeay.moviesuperdupperapp.R;
 import info.legeay.moviesuperdupperapp.domain.Movie;
@@ -62,10 +65,12 @@ public class MovieActivity extends AppCompatActivity {
     private TextView textViewViewMore;
 
     private boolean isReadMoreClicked;
+    private boolean isFaved;
+    private SharedPreferences preferences;
 
     private RequestQueue requestQueue;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,8 +160,15 @@ public class MovieActivity extends AppCompatActivity {
         textViewAwards.setText(this.movie.getAwards());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void init() {
         this.movie = new Movie();
+
+        preferences = getSharedPreferences("loved_movies",
+                Context.MODE_PRIVATE);
+        isFaved = preferences.contains(imdbID);
+
+        Log.d("PIL", "movie activi init size: " + preferences.getAll().size());
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -178,9 +190,29 @@ public class MovieActivity extends AppCompatActivity {
         textViewAwards = findViewById(R.id.movie_awards_content);
         textViewViewMore = findViewById(R.id.movie_abstract_see_more);
 
-        fab.setOnClickListener(view -> Snackbar
-                .make(view, "Loved it", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        if(isFaved) fab.setImageResource(R.drawable.ic_baseline_favorite_24);
+        else fab.setImageResource(R.drawable.ic_heart_icon);
+
+        fab.setOnClickListener(view -> {
+
+            SharedPreferences.Editor edit = MovieActivity.this.preferences.edit();
+
+            if(MovieActivity.this.isFaved) {
+                edit.remove(MovieActivity.this.imdbID);
+                fab.setImageResource(R.drawable.ic_heart_icon);
+            }
+            else {
+                edit.putString(MovieActivity.this.imdbID, MovieActivity.this.imdbID);
+                fab.setImageResource(R.drawable.ic_baseline_favorite_24);
+            }
+
+            MovieActivity.this.isFaved = !MovieActivity.this.isFaved;
+
+            edit.commit();
+
+            Snackbar.make(view, MovieActivity.this.isFaved ? "Loved it" : "Sadly rejected", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        });
 
         textViewViewMore.setOnClickListener(v -> {
             if(isReadMoreClicked) {

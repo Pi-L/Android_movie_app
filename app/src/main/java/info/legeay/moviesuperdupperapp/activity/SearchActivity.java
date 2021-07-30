@@ -46,6 +46,9 @@ public class SearchActivity extends AppCompatActivity {
     private Button searchButton;
     private EditText searchInput;
 
+    private int currentPage;
+    private String currentSearchedString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,17 +77,23 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("PIL", "onCreate - setOnClickListener : searchInput.getText() null or empty" );
 
             } else {
-                SearchActivity.this.setMovieList(this.searchInput.getText().toString());
+                SearchActivity.this.setMovieList(this.searchInput.getText().toString(), 1);
             }
 
         });
     }
 
-    private void setMovieList(String searchedString) {
+    public void getMoreMovie() {
+        setMovieList(currentSearchedString,  ++currentPage);
+    }
+
+    private void setMovieList(String searchedString, int page) {
+        currentSearchedString = searchedString;
+        currentPage = page;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                String.format("https://www.omdbapi.com/?s=%s&apikey=bf4e1adb", searchedString),
+                String.format("https://www.omdbapi.com/?s=%s&apikey=bf4e1adb&page=%d", searchedString, page),
                 null,
                 response -> {
                     Log.d("PIL", String.format("response ok : %s", response));
@@ -92,7 +101,8 @@ public class SearchActivity extends AppCompatActivity {
                     try {
                         SearchDTO searchDTO = mapper.readValue(response.toString(), SearchDTO.class);
                         MovieDTO[] movieDTOArray = searchDTO.getSearch();
-                        SearchActivity.this.foundMovieList.clear();
+
+                        if(page <= 1) SearchActivity.this.foundMovieList.clear();
 
                         if(movieDTOArray != null && movieDTOArray.length > 0) {
 
@@ -127,5 +137,13 @@ public class SearchActivity extends AppCompatActivity {
         intent.putExtra("imdbID", view.getTag().toString());
 
         startActivity(intent);
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public String getCurrentSearchedString() {
+        return currentSearchedString;
     }
 }

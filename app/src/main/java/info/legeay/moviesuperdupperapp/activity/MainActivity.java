@@ -3,10 +3,13 @@ package info.legeay.moviesuperdupperapp.activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
 
+    private SharedPreferences preferences;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -56,10 +62,15 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        preferences = getSharedPreferences("loved_movies",
+                Context.MODE_PRIVATE);
+
         requestQueue = Volley.newRequestQueue(this);
 
         this.recyclerView = findViewById(R.id.main_recycler_view);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        MainActivity.this.adapter = new MainAdapter(MainActivity.this, MainActivity.this.popularMovieList, LinearLayout.HORIZONTAL, 130);
+        MainActivity.this.recyclerView.setAdapter(MainActivity.this.adapter);
 
         setMovieList();
 
@@ -77,40 +88,51 @@ public class MainActivity extends AppCompatActivity {
         showdialog();
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setMovieList();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setMovieList() {
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                "https://www.omdbapi.com/?s=star+wars&apikey=bf4e1adb",
-                null,
-                response -> {
-                    Log.d("PIL", String.format("response ok : %s", response));
-                    ObjectMapper mapper = new ObjectMapper();
-                    try {
-                        SearchDTO searchDTO = mapper.readValue(response.toString(), SearchDTO.class);
-                        MovieDTO[] movieDTOArray = searchDTO.getSearch();
+        this.popularMovieList.clear();
 
-                        if(movieDTOArray != null && movieDTOArray.length > 0) {
-                            for (MovieDTO movieDTO : movieDTOArray) {
+        if(preferences == null || preferences.getAll().isEmpty()) return;
+
+        // imdbKey, imdbValue are identical
+        preferences.getAll().forEach((imdbKey, imdbValue) -> {
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    String.format("https://www.omdbapi.com/?i=%s&apikey=bf4e1adb", imdbKey),
+                    null,
+                    response -> {
+                        Log.d("PIL", String.format("response ok : %s", response));
+                        ObjectMapper mapper = new ObjectMapper();
+                        try {
+                            MovieDTO movieDTO = mapper.readValue(response.toString(), MovieDTO.class);
+
+                            if(movieDTO != null) {
                                 MainActivity.this.popularMovieList.add(movieDTO.toMovie());
+                                MainActivity.this.adapter.notifyDataSetChanged();
                             }
+                            else Log.d("PIL", "movieDTO == null");
 
-                            MainActivity.this.adapter = new MainAdapter(MainActivity.this, MainActivity.this.popularMovieList, LinearLayout.HORIZONTAL, 130);
-
-                            MainActivity.this.recyclerView.setAdapter(MainActivity.this.adapter);
-                            // MainActivity.this.adapter.notifyDataSetChanged();
+                        } catch (JsonProcessingException e) {
+                            Log.d("PIL", e.getMessage());
+                        } finally {
+                            Log.d("PIL", MainActivity.this.popularMovieList.toString());
                         }
-                        else Log.d("PIL", "movieDTOArray == null");
-                    } catch (JsonProcessingException e) {
-                        Log.d("PIL", e.getMessage());
-                    } finally {
-                        Log.d("PIL", MainActivity.this.popularMovieList.toString());
                     }
-                }
-                , error -> { Log.d("PIL", error.getMessage()); }
-        );
+                    , error -> { Log.d("PIL", error.getMessage()); }
+            );
 
-        requestQueue.add(jsonObjectRequest);
+            MainActivity.this.requestQueue.add(jsonObjectRequest);
+        });
     }
 
     @Override
@@ -121,14 +143,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClickMovie(View view) {
-
-        Intent intent = new Intent(this, MovieActivity.class);
-
-        intent.putExtra("imdbID", view.getTag().toString());
-
-        startActivity(intent);
-    }
+//    public void onClickMovie(View view) {
+//
+//        ImageView imageView = view.findViewById(R.id.main_movie_card_poster);
+//
+//
+//
+//        Intent intent = new Intent(this, MovieActivity.class);
+//        ActivityOptionsCompat options = ActivityOptionsCompat.
+//                makeSceneTransitionAnimation(MainActivity.this, imageView, "poster");
+//
+//        intent.putExtra("imdbID", view.getTag().toString());
+//
+//        startActivity(intent, options.toBundle());
+//    }
 
     protected void showdialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

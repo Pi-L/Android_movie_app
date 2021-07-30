@@ -45,7 +45,8 @@
             android:text="Film"
             android:textColor="@android:color/white"
             android:textSize="26sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:transitionName="poster"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -67,7 +68,8 @@
         android:visibility="gone"
         android:adjustViewBounds="true"
         android:scaleType="center"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
